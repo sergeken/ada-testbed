@@ -50,7 +50,7 @@ package body TestBed is
 
    procedure Close_Suite is
    begin
-      if Is_Open(Log_File) then
+      if not Is_Open(Log_File) then
          raise Bad_Sequence;
       end if;
       Close(Log_File);

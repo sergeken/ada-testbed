@@ -68,11 +68,11 @@ procedure Testrun is
       pragma Inline (Format_Error);
 
    begin
-      Suite_Name := "";
-      Run_Name   := "";
-      Test_Name  := "";
+      Suite_Name := (others => ' ');
+      Run_Name   := (others => ' ');
+      Test_Name  := (others => ' ');
 
-          Open (Log_File, Name => Suite, Mode => In_File);
+      Open (Log_File, Name => Suite, Mode => In_File);
       while not End_Of_File (Log_File) loop
          Read (Log_File, Current_Record);
          case Current_Record.Entry_Type is
@@ -127,7 +127,7 @@ procedure Testrun is
                   Format ("end test ok      ", Current_Record.Name,
                           Current_Record.Comment);
                end if;
-               Test_Name := "";
+               Test_Name := (others => ' ');
                Aborting := False;
             when End_Test_Failed =>
                if Aborting then
@@ -143,7 +143,7 @@ procedure Testrun is
                   Format ("*** ERROR *** test  ", Current_Record.Name,
                           Current_Record.Comment);
                end if;
-               Test_Name := "";
+               Test_Name := (others => ' ');
                Aborting := False;
             when Comment =>
                Format ("comment          ", Current_Record.Name,
@@ -168,7 +168,7 @@ procedure Testrun is
                   Format ("end run          ", Current_Record.Name,
                           Current_Record.Comment);
                end if;
-               Run_Name := "";
+               Run_Name := (others => ' ');
             when End_Run_Failed =>
                if Run_Name = "" then
                   Format_Error ("No start run record for",
@@ -180,7 +180,7 @@ procedure Testrun is
                   Format ("*** ERROR *** run   ", Current_Record.Name,
                           Current_Record.Comment);
                end if;
-               Run_Name := "";
+               Run_Name := (others => ' ');
          end case;
       end loop;
       Close (Log_File);
